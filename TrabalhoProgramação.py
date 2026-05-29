@@ -3,9 +3,7 @@ import time
 import random
 from queue import Queue
 
-# ============================================================
-#  MEMÓRIA COMPARTILHADA
-# ============================================================
+
 estado = {
     "via_ativa": "NS",       
     "fila_NS": 0,           
@@ -20,9 +18,6 @@ fila_log      = Queue()
 
 rodando = True  
 
-# ============================================================
-#  THREAD — SENSOR (produtora de dados)
-# ============================================================
 
 def sensor(via, intervalo):
     while rodando:
@@ -33,10 +28,7 @@ def sensor(via, intervalo):
                 f"[SENSOR {via}]   +{novos_carros} carro(s) detectado(s)"
             )
         time.sleep(intervalo + random.uniform(0, 0.3))
-
-# ============================================================
-#  THREAD — CONTROLADOR (lógica inteligente)
-# ============================================================
+        
 
 def controlador(tempo_ciclo):
     while rodando:
@@ -78,9 +70,7 @@ def controlador(tempo_ciclo):
 
         time.sleep(tempo_ciclo)
 
-# ============================================================
-#  THREAD — LOGGER (consumidora da Queue)
-# ============================================================
+
 
 def logger(duracao):
     fim = time.time() + duracao + 1
@@ -91,9 +81,7 @@ def logger(duracao):
         except Exception:
             pass
 
-# ============================================================
-#  EXIBIÇÃO DO ESTADO (executa na thread principal)
-# ============================================================
+
 
 def mostrar_estado():
     with lock_estado:
@@ -111,9 +99,7 @@ def mostrar_estado():
     print(f"  Ciclos: {ciclos}  |  Total passaram: {total}")
     print(f"  {'─'*45}\n")
 
-# ============================================================
-#  MAIN
-# ============================================================
+
 
 if __name__ == "__main__":
     DURACAO_SIM = 8  
